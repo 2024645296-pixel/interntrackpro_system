@@ -2,9 +2,6 @@
 session_start();
 include "config/db.php";
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 if(!isset($_SESSION['admin_name'])){
     header("Location: index.php");
     exit;
@@ -18,11 +15,6 @@ if(!isset($_GET['id']) || empty($_GET['id'])){
 $id = intval($_GET['id']);
 
 $get = mysqli_query($conn, "SELECT * FROM companies WHERE id='$id'");
-
-if(!$get){
-    die("SQL ERROR: " . mysqli_error($conn));
-}
-
 $row = mysqli_fetch_assoc($get);
 
 if(!$row){
@@ -39,7 +31,7 @@ if(isset($_POST['update_company'])){
     $industry = mysqli_real_escape_string($conn, $_POST['industry']);
     $slots = intval($_POST['internship_slots']);
 
-    $update = mysqli_query($conn, "
+    mysqli_query($conn, "
         UPDATE companies SET
         company_name='$company_name',
         email='$email',
@@ -50,57 +42,109 @@ if(isset($_POST['update_company'])){
         WHERE id='$id'
     ");
 
-    if(!$update){
-        die("UPDATE ERROR: " . mysqli_error($conn));
-    }
-
     header("Location: companies.php");
     exit;
 }
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Edit Company</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Company | InternTrack Pro</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- SAME STYLE AS STUDENTS PAGE -->
+<link rel="stylesheet" href="assets/css/sidebar.css">
+<link rel="stylesheet" href="assets/css/dashboard.css">
+
 </head>
 
-<body class="p-4">
+<body>
 
-<div class="container">
+<!-- SIDEBAR -->
+<?php include "includes/sidebar.php"; ?>
 
-    <h3>Edit Company</h3>
+<div id="overlay"></div>
 
-    <form method="POST">
+<div class="main-content">
 
-        <input type="text" name="company_name" class="form-control mb-2"
-               value="<?php echo $row['company_name']; ?>">
+    <!-- TOPBAR (same style as edit_students.php) -->
+    <div class="topbar box">
 
-        <input type="email" name="email" class="form-control mb-2"
-               value="<?php echo $row['email']; ?>">
+        <div>
+            <h4 class="fw-bold mb-1">Edit Company</h4>
+            <small class="text-muted">Update company information</small>
+        </div>
 
-        <input type="text" name="phone" class="form-control mb-2"
-               value="<?php echo $row['phone']; ?>">
+        <a href="companies.php" class="btn btn-dark px-4 py-2">
+            ← Back
+        </a>
 
-        <input type="text" name="location" class="form-control mb-2"
-               value="<?php echo $row['location']; ?>">
+    </div>
 
-        <input type="text" name="industry" class="form-control mb-2"
-               value="<?php echo $row['industry']; ?>">
+    <!-- FORM -->
+    <div class="box mt-4">
 
-        <input type="number" name="internship_slots" class="form-control mb-3"
-               value="<?php echo $row['internship_slots']; ?>">
+        <form method="POST">
 
-        <button type="submit" name="update_company" class="btn btn-primary">
-            Update Company
-        </button>
+            <div class="row g-3">
 
-        <a href="companies.php" class="btn btn-secondary">Back</a>
+                <div class="col-md-6">
+                    <label class="form-label">Company Name</label>
+                    <input type="text" name="company_name" class="form-control"
+                           value="<?php echo htmlspecialchars($row['company_name']); ?>" required>
+                </div>
 
-    </form>
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control"
+                           value="<?php echo htmlspecialchars($row['email']); ?>" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Phone</label>
+                    <input type="text" name="phone" class="form-control"
+                           value="<?php echo htmlspecialchars($row['phone']); ?>" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Location</label>
+                    <input type="text" name="location" class="form-control"
+                           value="<?php echo htmlspecialchars($row['location']); ?>" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Industry</label>
+                    <input type="text" name="industry" class="form-control"
+                           value="<?php echo htmlspecialchars($row['industry']); ?>" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Internship Slots</label>
+                    <input type="number" name="internship_slots" class="form-control"
+                           value="<?php echo htmlspecialchars($row['internship_slots']); ?>" required>
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" name="update_company" class="btn btn-primary px-4 py-2">
+                    Update Company
+                </button>
+            </div>
+
+        </form>
+
+    </div>
 
 </div>
+
+<?php include "includes/sidebar-script.php"; ?>
 
 </body>
 </html>

@@ -2,6 +2,9 @@
 session_start();
 include "config/db.php";
 
+$message = "";
+
+/* CHECK LOGIN */
 if(!isset($_SESSION['admin_name'])){
     header("Location: index.php");
     exit;
@@ -9,16 +12,18 @@ if(!isset($_SESSION['admin_name'])){
 
 /* GET APPLICATIONS */
 $applications = mysqli_query($conn, "
-SELECT applications.id,
-students.full_name,
-companies.company_name
-FROM applications
-JOIN students ON applications.student_id = students.id
-JOIN companies ON applications.company_id = companies.id
+
+    SELECT applications.id,
+    students.full_name,
+    companies.company_name
+
+    FROM applications
+    JOIN students ON applications.student_id = students.id
+    JOIN companies ON applications.company_id = companies.id
+
 ");
 
-$message = "";
-
+/* ADD INTERVIEW */
 if(isset($_POST['add_interview'])){
 
     $application_id = mysqli_real_escape_string($conn, $_POST['application_id']);
@@ -28,7 +33,6 @@ if(isset($_POST['add_interview'])){
     $status = mysqli_real_escape_string($conn, $_POST['status']);
     $notes = mysqli_real_escape_string($conn, $_POST['notes']);
 
-    /* CHECK DUPLICATE INTERVIEW */
     $check = mysqli_query($conn,"
         SELECT * FROM interviews
         WHERE application_id='$application_id'
@@ -36,8 +40,8 @@ if(isset($_POST['add_interview'])){
     ");
 
     if(mysqli_num_rows($check) > 0){
-        $message = "❌ Interview already scheduled for this application on this date!";
-    } else {
+        $message = "Interview already scheduled for this date!";
+    }else{
 
         $insert = mysqli_query($conn,"
             INSERT INTO interviews
@@ -49,8 +53,8 @@ if(isset($_POST['add_interview'])){
         if($insert){
             header("Location: interviews.php");
             exit;
-        } else {
-            $message = "❌ Failed to save interview!";
+        }else{
+            $message = "Failed to save interview!";
         }
     }
 }
@@ -58,39 +62,42 @@ if(isset($_POST['add_interview'])){
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Add Interview | InternTrack Pro</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/sidebar.css">
 <link rel="stylesheet" href="assets/css/dashboard.css">
+
 </head>
 
 <body>
 
-<!-- SIDEBAR (CONSISTENT SYSTEM) -->
-<div class="sidebar">
-    <div class="brand">Intern<span>Track</span></div>
+<!-- SIDEBAR -->
+<?php include "includes/sidebar.php"; ?>
 
-    <a href="dashboard.php" class="nav-item">Dashboard</a>
-    <a href="students.php" class="nav-item">Students</a>
-    <a href="companies.php" class="nav-item">Companies</a>
-    <a href="applications.php" class="nav-item">Applications</a>
-    <a href="interviews.php" class="nav-item">Interviews</a>
-    <a href="add_interview.php" class="nav-item active">Add Interview</a>
-</div>
+<div id="overlay"></div>
 
-<!-- MAIN -->
-<div class="main">
+<div class="main-content">
 
     <!-- TOP -->
-    <div class="topbar">
+    <div class="topbar box">
+
         <div>
-            <h4>Add Interview</h4>
-            <small>Schedule new interview</small>
+            <h4 class="fw-bold mb-1">Schedule Interview</h4>
+            <small class="text-muted">Create a new interview session</small>
         </div>
+
+        <a href="interviews.php" class="btn btn-dark px-4 py-2">
+            ← Back
+        </a>
+
     </div>
 
     <!-- ALERT -->
@@ -101,14 +108,14 @@ if(isset($_POST['add_interview'])){
     <?php } ?>
 
     <!-- FORM -->
-    <div class="box mt-3">
+    <div class="box mt-4">
 
         <form method="POST">
 
-            <div class="row g-3">
+            <div class="row g-4">
 
                 <div class="col-md-12">
-                    <label>Application</label>
+                    <label class="form-label">Select Application</label>
                     <select name="application_id" class="form-control" required>
                         <option value="">Choose Application</option>
 
@@ -122,45 +129,49 @@ if(isset($_POST['add_interview'])){
                 </div>
 
                 <div class="col-md-6">
-                    <label>Date</label>
+                    <label class="form-label">Interview Date</label>
                     <input type="date" name="date" class="form-control" required>
                 </div>
 
                 <div class="col-md-6">
-                    <label>Time</label>
+                    <label class="form-label">Interview Time</label>
                     <input type="time" name="time" class="form-control" required>
                 </div>
 
                 <div class="col-md-6">
-                    <label>Location</label>
+                    <label class="form-label">Location</label>
                     <input type="text" name="location" class="form-control">
                 </div>
 
                 <div class="col-md-6">
-                    <label>Status</label>
+                    <label class="form-label">Status</label>
                     <select name="status" class="form-control" required>
-                        <option value="Scheduled">Scheduled</option>
-                        <option value="Done">Done</option>
-                        <option value="Missed">Missed</option>
+                        <option>Scheduled</option>
+                        <option>Done</option>
+                        <option>Missed</option>
                     </select>
                 </div>
 
                 <div class="col-md-12">
-                    <label>Notes</label>
+                    <label class="form-label">Notes</label>
                     <textarea name="notes" class="form-control" rows="4"></textarea>
                 </div>
 
             </div>
 
-            <button type="submit" name="add_interview" class="btn btn-primary mt-4">
-                Save Interview
-            </button>
+            <div class="mt-4">
+                <button type="submit" name="add_interview" class="btn btn-primary px-4 py-2">
+                    Save Interview
+                </button>
+            </div>
 
         </form>
 
     </div>
 
 </div>
+
+<?php include "includes/sidebar-script.php"; ?>
 
 </body>
 </html>

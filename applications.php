@@ -22,44 +22,59 @@ $result = mysqli_query($conn, $query);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Applications | InternTrack Pro</title>
 
+<!-- BOOTSTRAP -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- SIDEBAR CSS -->
+<link rel="stylesheet" href="assets/css/sidebar.css">
+
+<!-- DASHBOARD CSS -->
 <link rel="stylesheet" href="assets/css/dashboard.css">
+
 </head>
 
 <body>
 
-<body>
-
+<!-- SIDEBAR -->
 <?php include "includes/sidebar.php"; ?>
 
-<div class="main" id="main">
+<!-- OVERLAY -->
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
 
     <!-- TOPBAR -->
-    <div class="topbar">
+    <div class="topbar box">
+
         <div>
-            <h4>Applications Management</h4>
-            <small>Manage internship applications</small>
+            <h4 class="fw-bold mb-1">Applications Management</h4>
+            <small class="text-muted">Manage internship applications</small>
         </div>
 
-        <a href="add_application.php" class="btn btn-primary">
+        <a href="add_application.php" class="btn btn-primary px-4 py-2">
             + Add Application
         </a>
+
     </div>
 
     <!-- TABLE -->
-    <div class="box mt-4">
+    <div class="box mt-4 p-0 overflow-hidden">
 
         <div class="table-responsive">
 
-            <table class="table align-middle">
+            <table class="table align-middle mb-0 custom-table">
 
-                <thead class="table-light">
+                <thead>
+
                     <tr>
                         <th>ID</th>
                         <th>Student</th>
@@ -67,25 +82,30 @@ $result = mysqli_query($conn, $query);
                         <th>Date</th>
                         <th>Status</th>
                         <th>Remarks</th>
-                        <th>Action</th>
+                        <th class="text-center">Action</th>
                     </tr>
+
                 </thead>
 
                 <tbody>
 
                 <?php if(mysqli_num_rows($result) == 0){ ?>
+
                     <tr>
-                        <td colspan="7" class="text-center py-4">
+                        <td colspan="7" class="text-center py-5 text-muted">
                             No applications found
                         </td>
                     </tr>
+
                 <?php } ?>
 
                 <?php while($row = mysqli_fetch_assoc($result)){ ?>
 
                     <tr>
 
-                        <td><?php echo $row['id']; ?></td>
+                        <td class="fw-semibold">
+                            #<?php echo $row['id']; ?>
+                        </td>
 
                         <td>
                             <b><?php echo htmlspecialchars($row['full_name']); ?></b>
@@ -99,37 +119,46 @@ $result = mysqli_query($conn, $query);
                             <?php echo $row['application_date']; ?>
                         </td>
 
+                        <!-- STATUS -->
                         <td>
+
                             <?php
-                            if($row['status'] == "Accepted"){
+                            $status = strtolower($row['status']);
+
+                            if($status == "accepted"){
                                 echo "<span class='badge bg-success'>Accepted</span>";
                             }
-                            elseif($row['status'] == "Rejected"){
+                            elseif($status == "rejected"){
                                 echo "<span class='badge bg-danger'>Rejected</span>";
                             }
                             else{
                                 echo "<span class='badge bg-warning text-dark'>Pending</span>";
                             }
                             ?>
+
                         </td>
 
+                        <!-- REMARKS -->
                         <td>
                             <?php echo htmlspecialchars($row['remarks'] ?? '-'); ?>
                         </td>
 
-                        <td class="d-flex gap-2">
+                        <!-- ACTION -->
+                        <td>
+                            <div class="d-flex justify-content-center gap-2">
 
-                            <a href="edit_application.php?id=<?php echo $row['id']; ?>"
-                               class="btn btn-sm btn-primary">
-                                Edit
-                            </a>
+                                <a href="edit_application.php?id=<?php echo $row['id']; ?>"
+                                   class="btn btn-sm btn-primary px-3">
+                                    Edit
+                                </a>
 
-                            <a href="delete_application.php?id=<?php echo $row['id']; ?>"
-                               class="btn btn-sm btn-danger"
-                               onclick="return confirm('Delete this application?')">
-                                Delete
-                            </a>
+                                <a href="delete_application.php?id=<?php echo $row['id']; ?>"
+                                   class="btn btn-sm btn-danger px-3"
+                                   onclick="return confirm('Delete this application?')">
+                                    Delete
+                                </a>
 
+                            </div>
                         </td>
 
                     </tr>
@@ -146,6 +175,7 @@ $result = mysqli_query($conn, $query);
 
 </div>
 
+<!-- SIDEBAR SCRIPT (ONLY ONCE) -->
 <?php include "includes/sidebar-script.php"; ?>
 
 </body>

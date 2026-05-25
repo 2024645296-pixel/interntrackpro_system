@@ -49,46 +49,116 @@ if(isset($_POST['update_student'])){
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Edit Student</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Student | InternTrack Pro</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/sidebar.css">
+<link rel="stylesheet" href="assets/css/dashboard.css">
+
 </head>
 
-<body class="p-4">
+<body>
 
-<div class="container">
-    <h3>Edit Student</h3>
+<!-- SIDEBAR -->
+<?php include "includes/sidebar.php"; ?>
 
-    <form method="POST">
+<div id="overlay"></div>
 
-        <input type="text" name="full_name" class="form-control mb-2"
-               value="<?php echo $row['full_name']; ?>">
+<div class="main-content">
 
-        <input type="email" name="email" class="form-control mb-2"
-               value="<?php echo $row['email']; ?>">
+    <!-- TOPBAR -->
+    <div class="topbar box">
 
-        <input type="text" name="phone" class="form-control mb-2"
-               value="<?php echo $row['phone']; ?>">
+        <div>
+            <h4 class="fw-bold mb-1">Edit Student</h4>
+            <small class="text-muted">Update student information</small>
+        </div>
 
-        <input type="text" name="university" class="form-control mb-2"
-               value="<?php echo $row['university']; ?>">
+        <a href="students.php" class="btn btn-dark px-4 py-2">
+            ← Back
+        </a>
 
-        <input type="text" name="course" class="form-control mb-2"
-               value="<?php echo $row['course']; ?>">
+    </div>
 
-        <select name="internship_status" class="form-control mb-3">
-            <option value="Active" <?php if($row['internship_status']=="Active") echo "selected"; ?>>Active</option>
-            <option value="Completed" <?php if($row['internship_status']=="Completed") echo "selected"; ?>>Completed</option>
-            <option value="Pending" <?php if($row['internship_status']=="Pending") echo "selected"; ?>>Pending</option>
-        </select>
+    <!-- FORM -->
+    <div class="box mt-4">
 
-        <button type="submit" name="update_student" class="btn btn-primary">
-            Update Student
-        </button>
+        <form method="POST">
 
-    </form>
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="full_name" class="form-control"
+                           value="<?php echo htmlspecialchars($row['full_name']); ?>" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control"
+                           value="<?php echo htmlspecialchars($row['email']); ?>" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Phone</label>
+                    <input type="text" name="phone" class="form-control"
+                           value="<?php echo htmlspecialchars($row['phone']); ?>" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">University</label>
+                    <input type="text" name="university" class="form-control"
+                           value="<?php echo htmlspecialchars($row['university']); ?>" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Course</label>
+                    <input type="text" name="course" class="form-control"
+                           value="<?php echo htmlspecialchars($row['course']); ?>" required>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Status</label>
+                    <select name="internship_status" class="form-control">
+
+                        <option value="Active" <?php if($row['internship_status']=="Active") echo "selected"; ?>>
+                            Active
+                        </option>
+
+                        <option value="Completed" <?php if($row['internship_status']=="Completed") echo "selected"; ?>>
+                            Completed
+                        </option>
+
+                        <option value="Pending" <?php if($row['internship_status']=="Pending") echo "selected"; ?>>
+                            Pending
+                        </option>
+
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" name="update_student" class="btn btn-primary px-4 py-2">
+                    Update Student
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
 </div>
+
+<?php include "includes/sidebar-script.php"; ?>
 
 </body>
 </html>

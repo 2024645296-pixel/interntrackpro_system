@@ -40,39 +40,48 @@ if(!empty($search)){
 
 <title>Students | InternTrack Pro</title>
 
+<!-- BOOTSTRAP -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<!-- SIDEBAR CSS -->
+<link rel="stylesheet" href="assets/css/sidebar.css">
+
+<!-- DASHBOARD CSS -->
 <link rel="stylesheet" href="assets/css/dashboard.css">
 
 </head>
 
 <body>
 
+<!-- SIDEBAR -->
 <?php include "includes/sidebar.php"; ?>
 
-<!-- MAIN -->
-<div class="main" id="main">
+<!-- OVERLAY -->
+<div id="overlay"></div>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
 
     <!-- TOPBAR -->
-    <div class="topbar">
+    <div class="topbar box">
 
         <div>
-            <h4>Students Management</h4>
-            <small>Manage internship students</small>
+            <h4 class="fw-bold mb-1">Students Management</h4>
+            <small class="text-muted">Manage internship students</small>
         </div>
 
-        <a href="add_student.php" class="btn btn-primary">
+        <a href="add_student.php" class="btn btn-primary px-4 py-2">
             + Add Student
         </a>
 
     </div>
 
-    <!-- SEARCH -->
-    <div class="box mt-3">
+    <!-- SEARCH BOX -->
+    <div class="box mt-4">
 
         <form method="GET">
 
-            <div class="row g-2">
+            <div class="row g-3 align-items-center">
 
                 <div class="col-md-10">
 
@@ -80,7 +89,7 @@ if(!empty($search)){
                         type="text"
                         name="search"
                         class="form-control"
-                        placeholder="Search student..."
+                        placeholder="Search student by name, email, university..."
                         value="<?php echo htmlspecialchars($search); ?>"
                     >
 
@@ -88,7 +97,7 @@ if(!empty($search)){
 
                 <div class="col-md-2">
 
-                    <button class="btn btn-dark w-100">
+                    <button class="btn btn-primary w-100 py-3">
                         Search
                     </button>
 
@@ -101,25 +110,23 @@ if(!empty($search)){
     </div>
 
     <!-- TABLE -->
-    <div class="box mt-4">
+    <div class="box mt-4 p-0 overflow-hidden">
 
         <div class="table-responsive">
 
-            <table class="table align-middle">
+            <table class="table align-middle mb-0 custom-table">
 
-                <thead class="table-light">
+                <thead>
 
                     <tr>
-
-                        <th>ID</th>
+                        <th class="ps-4">ID</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>University</th>
                         <th>Course</th>
                         <th>Status</th>
-                        <th>Action</th>
-
+                        <th class="text-center">Action</th>
                     </tr>
 
                 </thead>
@@ -129,11 +136,9 @@ if(!empty($search)){
                 <?php if(mysqli_num_rows($result) == 0){ ?>
 
                     <tr>
-
-                        <td colspan="8" class="text-center py-4">
+                        <td colspan="8" class="text-center py-5 text-muted">
                             No students found
                         </td>
-
                     </tr>
 
                 <?php } ?>
@@ -142,12 +147,12 @@ if(!empty($search)){
 
                     <tr>
 
-                        <td>
-                            <?php echo $row['id']; ?>
+                        <td class="ps-4 fw-semibold">
+                            #<?php echo $row['id']; ?>
                         </td>
 
-                        <td>
-                            <b><?php echo $row['full_name']; ?></b>
+                        <td class="fw-semibold">
+                            <?php echo $row['full_name']; ?>
                         </td>
 
                         <td>
@@ -188,36 +193,28 @@ if(!empty($search)){
                                 }
                             ?>
 
-                            <span class="badge <?php echo $badge; ?>">
-
-                                <?php echo $row['internship_status']; ?>
-
+                            <span class="badge <?php echo $badge; ?> px-3 py-2">
+                                <?php echo ucfirst($row['internship_status']); ?>
                             </span>
 
                         </td>
 
                         <!-- ACTION -->
                         <td>
+                            <div class="d-flex justify-content-center gap-2">
 
-                            <div class="action-buttons">
-
-                                <a
-                                    href="edit_student.php?id=<?php echo $row['id']; ?>"
-                                    class="btn btn-sm btn-primary"
-                                >
+                                <a href="edit_student.php?id=<?php echo $row['id']; ?>"
+                                   class="btn btn-sm btn-primary px-3">
                                     Edit
                                 </a>
 
-                                <a
-                                    href="delete_student.php?id=<?php echo $row['id']; ?>"
-                                    class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Delete this student?')"
-                                >
+                                <a href="delete_student.php?id=<?php echo $row['id']; ?>"
+                                   class="btn btn-sm btn-danger px-3"
+                                   onclick="return confirm('Delete this student?')">
                                     Delete
                                 </a>
 
                             </div>
-
                         </td>
 
                     </tr>
@@ -234,6 +231,7 @@ if(!empty($search)){
 
 </div>
 
+<!-- SIDEBAR SCRIPT (ONLY ONCE!) -->
 <?php include "includes/sidebar-script.php"; ?>
 
 </body>

@@ -1,34 +1,67 @@
-<!-- OVERLAY -->
-<div class="overlay" id="overlay"></div>
+<?php
+$current_page = basename($_SERVER['PHP_SELF']);
+?>
 
-<!-- HAMBURGER -->
-<button class="menu-toggle" id="menu-toggle">
-    ☰
-</button>
+<div class="sidebar">
 
-<!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
+    <!-- TOP -->
+    <div class="sidebar-top">
 
-    <div class="brand">
-        Intern<span class="blue-text">Track</span>
+        <!-- BRAND -->
+        <div class="brand">
+            <span class="brand-white">Intern</span><span class="brand-blue">Track Pro</span>
+        </div>
+
+        <!-- MENU -->
+        <nav class="sidebar-menu">
+
+            <a href="dashboard.php"
+               class="nav-item <?php if($current_page == 'dashboard.php') echo 'active'; ?>">
+                <span>🏠</span> Dashboard
+            </a>
+
+            <a href="students.php"
+               class="nav-item <?php if(in_array($current_page, ['students.php','add_student.php','edit_student.php'])) echo 'active'; ?>">
+                <span>🎓</span> Students
+            </a>
+
+            <a href="companies.php"
+               class="nav-item <?php if(in_array($current_page, ['companies.php','add_company.php','edit_company.php'])) echo 'active'; ?>">
+                <span>🏢</span> Companies
+            </a>
+
+            <a href="applications.php"
+               class="nav-item <?php if(in_array($current_page, ['applications.php','add_application.php','edit_application.php'])) echo 'active'; ?>">
+                <span>📄</span> Applications
+            </a>
+
+            <a href="interviews.php"
+               class="nav-item <?php if(in_array($current_page, ['interviews.php','add_interview.php','edit_interview.php'])) echo 'active'; ?>">
+                <span>🎤</span> Interviews
+            </a>
+
+            <a href="reports.php"
+               class="nav-item <?php if($current_page == 'reports.php') echo 'active'; ?>">
+                <span>📊</span> Reports
+            </a>
+
+            <!-- LOGOUT -->
+            <a href="logout.php"
+               class="nav-item logout-btn <?php if($current_page == 'logout.php') echo 'active'; ?>">
+                <span>🚪</span> Logout
+            </a>
+
+        </nav>
     </div>
 
-    <a href="dashboard.php">Dashboard</a>
-    <a href="students.php">Students</a>
-    <a href="companies.php">Companies</a>
-    <a href="applications.php">Applications</a>
-    <a href="interviews.php">Interviews</a>
-    <a href="reports.php">Reports</a>
+    <!-- THEME TOGGLE (STAY WHERE IT IS) -->
+    <div class="sidebar-bottom">
 
-    <a href="logout.php" class="logout">Logout</a>
+        <button id="themeToggle" class="theme-btn">
+            <span id="themeIcon">🌙</span>
+            <span id="themeText">Dark Mode</span>
+        </button>
 
-    <!-- DARK MODE BUTTON -->
-    <button class="dark-toggle" id="dark-toggle">
-
-        <span class="icon" id="theme-icon">🌙</span>
-
-        <span id="theme-text">Dark Mode</span>
-
-    </button>
+    </div>
 
 </div>
