@@ -1,11 +1,12 @@
 <?php
 
-$host = "localhost";
+$host = "mysql.railway.internal";
 $user = "root";
-$pass = "";
-$db   = "interntrack_pro";
+$pass = "dsqXfGVlwFDCXctQTagzYjKaCfSTECvN";
+$db   = "railway";
+$port = 3306;
 
-$conn = mysqli_connect($host, $user, $pass, $db);
+$conn = mysqli_connect($host, $user, $pass, $db, $port);
 
 if(!$conn){
     die("Connection Failed: " . mysqli_connect_error());
