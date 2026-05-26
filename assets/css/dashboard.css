@@ -4,9 +4,7 @@ body {
     overflow-x: hidden;
 }
 
-/* =========================
-   BASE BODY
-========================= */
+/* BASE BODY */
 
 body {
     font-family: 'Inter', sans-serif;
@@ -16,9 +14,7 @@ body {
     transition: all 0.3s ease;
 }
 
-/* =========================
-   GLOBAL TRANSITION
-========================= */
+/* GLOBAL TRANSITION */
 
 body,
 .sidebar,
@@ -36,9 +32,7 @@ textarea {
     transition: all 0.3s ease;
 }
 
-/* =========================
-   MAIN CONTENT
-========================= */
+/* MAIN CONTENT */
 
 .main-content {
     margin-left: 280px;
@@ -47,9 +41,7 @@ textarea {
     min-height: 100vh;
 }
 
-/* =========================
-   SIDEBAR
-========================= */
+/* SIDEBAR */
 
 .sidebar {
     width: 280px;
@@ -60,9 +52,7 @@ textarea {
     z-index: 1000;
 }
 
-/* =========================
-   BRAND / LOGO
-========================= */
+/* BRAND */
 
 .brand {
     font-size: 38px;
@@ -90,9 +80,7 @@ textarea {
     color: #3b82f6 !important;
 }
 
-/* =========================
-   TOPBAR
-========================= */
+/* TOPBAR */
 
 .topbar {
     display: flex;
@@ -117,9 +105,7 @@ textarea {
     margin: 0;
 }
 
-/* =========================
-   USER BOX
-========================= */
+/* USER BOX */
 
 .user-box {
     background: #ffffff;
@@ -137,9 +123,7 @@ textarea {
     font-weight: 800;
 }
 
-/* =========================
-   KPI CARDS
-========================= */
+/* KPI CARDS */
 
 .card-box {
     background: #ffffff;
@@ -205,9 +189,7 @@ textarea {
         0 10px 35px rgba(249, 115, 22, 0.18);
 }
 
-/* =========================
-   CONTENT BOXES
-========================= */
+/* CONTENT BOXES */
 
 .box {
     background: #ffffff;
@@ -226,9 +208,7 @@ textarea {
     color: #0f172a;
 }
 
-/* =========================
-   ACTIVITY
-========================= */
+/* ACTIVITY */
 
 .activity {
     padding: 14px 0;
@@ -239,17 +219,13 @@ textarea {
     border-bottom: none;
 }
 
-/* =========================
-   CALENDAR
-========================= */
+/* CALENDAR */
 
 #calendar {
     background: transparent;
 }
 
-/* =========================
-   TABLE
-========================= */
+/* TABLE */
 
 .table {
     width: 100%;
@@ -265,9 +241,7 @@ textarea {
     font-size: 14px;
 }
 
-/* =========================
-   FORMS
-========================= */
+/* FORMS */
 
 .form-control,
 input,
@@ -287,27 +261,21 @@ textarea:focus {
     box-shadow: none;
 }
 
-/* =========================
-   BUTTON
-========================= */
+/* BUTTON */
 
 .btn {
     border-radius: 14px;
     font-weight: 600;
 }
 
-/* =========================
-   CARD SYSTEM
-========================= */
+/* CARD SYSTEM */
 
 .card,
 .card-body {
     border-radius: 20px;
 }
 
-/* =========================
-   DARK MODE
-========================= */
+/* DARK MODE */
 
 body.dark {
     background: #0b1220;
@@ -402,9 +370,7 @@ body.dark .bg-white {
     background: #111827 !important;
 }
 
-/* =========================
-   THEME BUTTON
-========================= */
+/* THEME BUTTON */
 
 .theme-btn {
     width: 100%;
@@ -446,9 +412,7 @@ body.dark .theme-btn {
     color: #fff;
 }
 
-/* =========================
-   REPORT CHART
-========================= */
+/* REPORT CHART */
 
 .chart-container {
     width: 100%;
