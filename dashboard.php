@@ -11,34 +11,39 @@ if(!isset($_SESSION['admin_name'])){
    KPI
 ========================= */
 
-$total_students = mysqli_fetch_assoc(
-    mysqli_query($conn,"
-    SELECT COUNT(*) AS total 
-    FROM students
-    ")
-)['total'];
+$result = mysqli_query($conn,"SELECT COUNT(*) AS total FROM students");
 
-$total_companies = mysqli_fetch_assoc(
-    mysqli_query($conn,"
-    SELECT COUNT(*) AS total 
-    FROM companies
-    ")
-)['total'];
+if(!$result){
+    die("SQL ERROR (students): " . mysqli_error($conn));
+}
 
-$total_applications = mysqli_fetch_assoc(
-    mysqli_query($conn,"
-    SELECT COUNT(*) AS total 
-    FROM applications
-    ")
-)['total'];
+$total_students = mysqli_fetch_assoc($result)['total'];
 
-$pending = mysqli_fetch_assoc(
-    mysqli_query($conn,"
-    SELECT COUNT(*) AS total 
-    FROM applications 
-    WHERE status='Pending'
-    ")
-)['total'];
+
+$result = mysqli_query($conn,"SELECT COUNT(*) AS total FROM companies");
+
+if(!$result){
+    die("SQL ERROR (companies): " . mysqli_error($conn));
+}
+
+$total_companies = mysqli_fetch_assoc($result)['total'];
+
+
+$result = mysqli_query($conn,"SELECT COUNT(*) AS total FROM applications");
+
+if(!$result){
+    die("SQL ERROR (applications): " . mysqli_error($conn));
+}
+
+$total_applications = mysqli_fetch_assoc($result)['total'];
+
+$result = mysqli_query($conn,"SELECT COUNT(*) AS total FROM applications WHERE status='Pending'");
+
+if(!$result){
+    die("SQL ERROR (pending): " . mysqli_error($conn));
+}
+
+$pending = mysqli_fetch_assoc($result)['total'];
 
 /* =========================
    RECENT ACTIVITY
